@@ -19,7 +19,7 @@
 #==========================================================
 
 #set -euo pipefail
-shopt -s extglob
+#shopt -s extglob
 trap cleanup EXIT
 cleanup(){
     rm "$tmpfile"
@@ -27,14 +27,12 @@ cleanup(){
 #[ -d /opt/cicpreserve ] || mkdir /opt/cicpreserve 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 WORK_DIR="/opt/cicpreserve/"
-FSTYPE=""
-TPATH=""
-TTYPE=""
+DEBUG=1
 CH_SUM_BIN="b3sum"
 tmpfile="$(mktemp)"
 
 # import cic custom logging script
-. "$SCRIPT_DIR/ciclogger";
+. "$SCRIPT_DIR/ciclogger.sh" || { log error "Failed to find ciclogger file."; exit 1; }
 
 #help message output
 printf -v SCRIPT_OPTS "
@@ -56,8 +54,10 @@ printf -v SCRIPT_OPTS "
 
 
 #===preserve.sh checkpath() doc===#
-# check {FILE/FOLDER}
-# Check the status of the filesystem, passed file, and attr(1) attributes.
+# checkpath {FILE/FOLDER}
+# Check the validity of a given path and return the dirname(1) and relevant extended
+# attributes of the file.
+#
 # If no FILE/FOLDER, check the fstype of the current directory
 # EXIT CODES:
 #   0       FILE/FOLDER/fstype is OK
@@ -65,12 +65,15 @@ printf -v SCRIPT_OPTS "
 #   2       Bad filesystem (see the `-x` option)
 #
 checkpath() {
-    # if no arguments passed, check the fstype of the root directory
-    [ $# -eq 0 ] && set -- "/"
-    fstype="$(findmnt -rn -o FSTYPE -T "$1")"
+    if [[ -n "$1" || ! -f "$1"  ]]; then
+        log error "Bad path, or file already exists!" path "${1}"
+    fi
 
-    # if fstype is unsupported, log an error and exit with a special status
-    if [[ "$fstype" == !(ext2|ext3|ext4|btrfs|xfs) ]]; then log error "bad fstype!" fstype "$fstype"; return 2; fi
+    case "$1" in
+        source ) rp="$(realpath "$1" 2> "$tmpfile")"
+                :
+                ;;
+    esac
 
     # attempt to resolve the real path of the argument. store stderr in ${tmpfile} to be evaluated later
     tpath="$(realpath "$1" 2>"$tmpfile")"
@@ -84,6 +87,11 @@ checkpath() {
         log error "Bad path?" stderr "$(cat "$tmpfile")"
         exit 1
     fi
+    fstype="$(findmnt -rn -o FSTYPE -T "$(dirname $tpath)")"
+
+    # if fstype is unsupported, log an error and exit with a special status
+    if [[ "$fstype" == !(ext2|ext3|ext4|btrfs|xfs) ]]; then log error "bad fstype!" fstype "$fstype"; return 2; fi
+    echo "$tpath"
     return 0
 }
 
@@ -96,6 +104,7 @@ checksum(){
         puresum="$(echo $checksum | cut -d' ' -f4)"
         # full CH_SUM_BINithm name, gathered after the checksum is generated
         algfname="$(echo "$checksum" | cut -d' ' -f1)"
+        [ "${#puresum}" -le 32 ] && log warn "Checksum is less than 32 characters?" "$algfname" "$puresum"
         log info "Generated checksum" "$algfname" "$puresum"
     else
         cat $tmpfile
@@ -105,13 +114,35 @@ checksum(){
         cd "$(dirname $tpath)" || exit 1
         echo "$checksum" > "${tpath}.${algfname,,}"
     )
+    chsumfile="${tpath}.${algfname,,}"
+    chmod 600 "$chsumfile"
+    [ $DEBUG -eq 0 ] && echo "$checksum"
 }
 
-if [ $# -eq 0 ]; then
-    checkpath .
-elif [[ $# -ge 1 ]]; then
-    if checkpath "$1"; then
-        log info "FSTYPE: ${fstype}"
-        checksum "$tpath"
-    fi
-fi
+main(){
+    for arg in ${1}; do
+        if checkpath "$arg"; then
+            log info "Path $arg is OK"
+        fi
+        if checksum "$tpath"; then
+            log info "Checksum OK." "$algfname" "$puresum"
+        fi
+        echo "
+        FILE: $1
+        RESOLVED NAME: $tpath
+        CHECKSUM FILE: $chsumfile
+        CHECKSUM ALGORITHM: $algfname
+        "
+    done
+}
+
+compress(){
+    case "$1" in
+        tar )
+            tar --acls --xattrs -I 'zstd -T0' -caf "$1.tar.zst"
+            log info "Done compressing $1" path "$1.tar.zst"
+        ;;
+    esac
+}
+
+main "$*"
