@@ -3,7 +3,7 @@ cic-rwu/static/man/README.md
 ```
 ___
 # Overview
-This directory contains manual pages for shared custom CIC *programs* 
+This directory contains manual pages for shared CIC programs stored in `bin/`
 
 In general, formatting should follow the same format as [linux man-pages](https://man7.org/linux/man-pages/man7/man-pages.7.html), but this ***does NOT mean*** *all manuals listed here are related to linux/UNIX-only programs*. This is simply because I think the formatting conventions are intuitive. 
 
