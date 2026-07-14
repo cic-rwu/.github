@@ -1,0 +1,21 @@
+#!/bin/bash
+#==========================================================
+#
+#       FILE:           bin/cicdaemon-bootstrap
+#       USAGE:          TBD 
+#       DESCRIPTION:    Script to automate checking host configurations
+#
+#       AUTHOR:         MXHML (mxhml@proton.me)
+#       VERSION:        1.0
+#       CREATED:        July 14, 2026
+#       REVISION:       0
+#
+#		EXTENDED DESCRIPTION
+#			This script checks the 
+#==========================================================
+set -o pipefail
+declare -r 		SCRIPT_DIR="$(cd -P "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+declare -r		WORK_DIR="/opt/cicdaemon"
+
+#check if WORK_DIR exists. if not, create it
+[ -d "$WORK_DIR" ] || mkdir -p "$WORK_DIR"
