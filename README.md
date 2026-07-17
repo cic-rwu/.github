@@ -1,29 +1,24 @@
+<div align="center">
 
-[![License](https://img.shields.io/badge/license-%20%20GNU%20GPLv3%20-green)](https://github.com/cic-rwu/cic-rwu/blob/main/LICENSE)
-[![Issues](https://img.shields.io/github/issues/cic-rwu/cic-rwu)](https://github.com/cic-rwu/cic-rwu/issues)
+[![license](https://img.shields.io/badge/license-%20%20GNU%20GPLv3%20-green?style=plastic)](https://github.com/cic-rwu/cic-rwu/blob/main/LICENSE)
+[![issues](https://img.shields.io/github/issues/cic-rwu/cic-rwu?style=plastic)](https://github.com/cic-rwu/cic-rwu/issues)
+![Discord](https://img.shields.io/discord/844745465391874078?style=plastic&logo=discord&logoColor=white&logoSize=auto&label=Discord&labelColor=%235865F2&color=%235865F2)
+
+<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/cic-rwu/cic-rwu/shellcheck.yaml?branch=main&style=flat-square&logo=git&label=main&"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/cic-rwu/cic-rwu?style=flat-square">
+
+<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/cic-rwu/cic-rwu/shellcheck.yaml?branch=dev&style=flat-square&logo=git&label=dev"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/cic-rwu/cic-rwu/shellcheck.yaml?branch=cicdaemon&style=flat-square&logo=git&label=cicdaemon">
 
 
-![branch main](https://img.shields.io/badge/branch-main-green?style=flat-square)
-![last commit](https://img.shields.io/github/last-commit/cic-rwu/cic-rwu/main?display_timestamp=committer&style=flat&label=last%20commit)
-
-![branch dev](https://img.shields.io/badge/branch-dev-orange?style=flat-square)
-![last commit](https://img.shields.io/github/last-commit/cic-rwu/cic-rwu/dev?display_timestamp=committer&style=flat&label=last%20commit)
-
+</div>
 
 <p align="center">
-  <img src="static/images/cic-base.svg" alt="RWU Cybersecurity and Intel Club banner" width="730px" height="730px">
+  <img src="static/images/cic-base.svg" alt="RWU Cybersecurity and Intel Club banner" width="400" height="400">
   <!-- Replace docs/banner.png with the club logo/banner -->
 </p>
 
 >This repo is still a work in progress! If you have suggestions, please see [Contact](#contact) to send us an email, or submit an [issue](https://github.com/cic-rwu/cic-rwu/issues) on Github!
 
-# cic-rwu
-
-**Umbrella repository for the Roger Williams University Cybersecurity and Intel Club.**
-
-Every club project is starts here. Demos, tools, and experiments start as a folder in this repo; once a project outgrows the umbrella, it gets forked into its own standalone repository under the [cic-rwu](https://github.com/cic-rwu) org.
-
-## Table of Contents
+# Cybersecurity and Intel Club at RWU
 
 - [About](#about)
 - [Repo Structure](#repo-structure)
@@ -34,21 +29,11 @@ Every club project is starts here. Demos, tools, and experiments start as a fold
 
 ## About
 
-The Cybersecurity and Intel Club (CIC) at RWU is a student organization for anyone interested in security, offensive/defensive tooling, CTFs, and intelligence analysis. This repo is our shared workspace: a place for members to prototype, collaborate, and graduate ideas into full projects.
+Welcome to the repository! Here you'll find technical documentation, programs, and other miscellaneous files we decided to version control.
 
-- Club page: [HawkLink](https://hawklink.rwu.edu/organization/cybersecurity-intel)
-- Org: [github.com/cic-rwu](https://github.com/cic-rwu)
+For documentation thats a little more polished, see the [organization's page](https://github.com/cic-rwu).
 
-## Repo Structure
-```
-cic-rwu/
-├── bin/        # Shared shell scripts used across club projects
-└── README.md
-```
-
-- **`bin/`** — Shared shell scripts (setup, tooling, utilities) reused across multiple club projects. If you're writing a script more than one project will need, it belongs here rather than duplicated per-project.
-
-As individual projects mature, they're extracted into their own repo in the [cic-rwu org](https://github.com/orgs/cic-rwu/repositories) and linked back here.
+To avoid creating a separate repository for every small project we work on, most projects will start here as a branch, and gets forked as-needed.
 
 ## Getting Started
 
