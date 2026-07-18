@@ -11,32 +11,12 @@
 ![dev branch workflow status](https://img.shields.io/github/actions/workflow/status/cic-rwu/cic-rwu/shellcheck.yaml?branch=dev&style=flat-square&logo=git&logoSize=auto&label=dev)![dev last commit](https://img.shields.io/github/last-commit/cic-rwu/cic-rwu/dev?style=flat-square)
 
 </div>
-</div>
-<p align="center">
-  <img src="../static/images/cic-base.svg" alt="RWU Cybersecurity and Intel Club banner" width="400" height="400">
-</p>
 
-<div>
-<style>
-  h1{
-    text-align:center;
-    border-bottom:none; !important
-    text-decoration:none; !important
-    padding:none; !important
-    font-family: sans-serif;
-  font-weight: 550;
-  font-style: normal;
-  }
-  h3,h5 {
-    margin-top:-10px;
-    text-align:center;
-    font-weight:400;
-    opacity:0.7;
-    padding:none; !important
-  }
-</style>
-<h1>CYBERSECURITY AND INTEL CLUB</h1>
-<h3>ROGER WILLIAMS UNIVERSITY</h3>
+<img src="../static/images/cic-base.svg" alt="RWU Cybersecurity and Intel Club banner" width="400" height="400">
+
+# CYBERSECURITY AND INTEL CLUB
+[**Roger Williams University**](https://rwu.edu)
+
 </div>
 
 ## Table of Contents
